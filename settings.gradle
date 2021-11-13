@@ -1,8 +1,19 @@
+plugins {
+    id "com.gradle.enterprise" version "3.3.1"
+}
+
 rootProject.name = 'graalvm-native-image-plugin'
 
 buildCache {
     local {
         directory = new File(rootDir, '.cache')
         removeUnusedEntriesAfterDays 10
+    }
+}
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+        termsOfServiceAgree = 'yes'
     }
 }

@@ -137,7 +137,7 @@ jobs:
           restore-keys: build-
 
       - name: Run functional test
-        run: ./gradlew clean functionalTest
+        run: ./gradlew clean functionalTest --scan
 
       - name: Store reports
         uses: actions/upload-artifact@v1
