@@ -11,7 +11,7 @@ jobs:
   build:
     name: Release Plugin
     runs-on: ubuntu-18.04
-    if: contains(github.event.ref, 'master')
+    if: contains(github.event.ref, 'main')
 
     steps:
 

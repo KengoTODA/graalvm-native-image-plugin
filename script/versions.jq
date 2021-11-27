@@ -21,7 +21,7 @@ reverse |
 .name = "version availability test" |
 .on = {
   push: {
-    branches: ["master"]
+    branches: ["main"]
   },
   workflow_dispatch: {
     inputs: {

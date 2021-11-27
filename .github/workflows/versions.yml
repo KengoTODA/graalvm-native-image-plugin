@@ -2,7 +2,7 @@ name: version availability test
 "on":
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
     inputs:
       memo:

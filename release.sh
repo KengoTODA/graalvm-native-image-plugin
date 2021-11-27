@@ -21,11 +21,11 @@ git fetch
 branch_name=$(instant -f unix) # instant can be found at https://github.com/mike-neck/instant
 
 echo "create new branch: release/${branch_name}"
-git checkout -b "release/${branch_name}" origin/master
+git checkout -b "release/${branch_name}" origin/main
 
 git commit --allow-empty -m "release/${level}"
 gh pr create \
-  --base master \
+  --base main \
   --title "release/${level}" \
   --body "release/${level}" 
 
