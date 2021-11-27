@@ -280,8 +280,10 @@ public class ClassUsage implements Comparable<ClassUsage>, MergeableConfig<Class
         BooleanMergeable.mergeBoolean(this.allPublicFields, other.allPublicFields),
         BooleanMergeable.mergeBoolean(this.allDeclaredClasses, other.allDeclaredClasses),
         BooleanMergeable.mergeBoolean(this.allPublicClasses, other.allPublicClasses),
-        BooleanMergeable.mergeBoolean(this.queryAllDeclaredConstructors, other.queryAllDeclaredConstructors),
-        BooleanMergeable.mergeBoolean(this.queryAllPublicConstructors, other.queryAllPublicConstructors),
+        BooleanMergeable.mergeBoolean(
+            this.queryAllDeclaredConstructors, other.queryAllDeclaredConstructors),
+        BooleanMergeable.mergeBoolean(
+            this.queryAllPublicConstructors, other.queryAllPublicConstructors),
         BooleanMergeable.mergeBoolean(this.queryAllDeclaredMethods, other.queryAllDeclaredMethods),
         BooleanMergeable.mergeBoolean(this.queryAllPublicMethods, other.queryAllPublicMethods));
   }
