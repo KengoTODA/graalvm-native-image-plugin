@@ -17,7 +17,7 @@ dependencies {
 }
 
 application {
-    mainClass = "com.example.AppKt"
+    mainClass.set("com.example.AppKt")
 }
 
 nativeImage {

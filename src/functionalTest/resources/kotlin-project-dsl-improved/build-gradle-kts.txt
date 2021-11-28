@@ -17,12 +17,12 @@ dependencies {
 }
 
 application {
-    mainClass = "com.example.AppKt"
+    mainClass.set("com.example.AppKt")
 }
 
 nativeImage {
   graalVmHome = System.getenv("JAVA_HOME")
-  mainClass = "com.example.AppKt"
+  mainClass.set("com.example.AppKt")
   executableName = "test-app"
   outputDirectory = file("$buildDir/image")
   arguments("--no-fallback")

@@ -9,12 +9,12 @@ repositories {
 }
 
 application {
-    mainClass = "com.example.App"
+    mainClass.set("com.example.App")
 }
 
 nativeImage {
   graalVmHome = System.getenv("JAVA_HOME")
-  mainClass = "com.example.App"
+  mainClass.set("com.example.App")
   executableName = "pst8pdt-time"
   outputDirectory = file("$buildDir/image")
   arguments("--no-fallback")
