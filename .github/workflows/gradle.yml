@@ -10,38 +10,29 @@ on:
 jobs:
   test:
     name: Run Tests
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       
       - name: Set up Java
-        uses: actions/setup-java@v1.4.3
+        uses: actions/setup-java@v2
         with:
           java-version: '8'
-
-      - name: Cache gradle
-        id: gradle
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ hashFiles('**/*.gradle') }}-${{ hashFiles('**/gradle-wrapper.properties') }}
-          restore-keys: gradle-
-
+          distribution: 'temurin'
+          cache: 'gradle'
       - name: Run Tests with Gradle
         run: ./gradlew clean spotlessCheck test --continue
 
       - name: Store reports
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: always()
         with:
           name: test-report
           path: build/reports/tests/test
 
   functionalTest:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     needs: test
     strategy:
       matrix:
@@ -68,7 +59,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Set up GraalVM
         uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
@@ -128,7 +119,7 @@ jobs:
         run: ./gradlew clean functionalTest
 
       - name: Store reports
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: always()
         with:
           name: test-report-${{ matrix.graal }}-${{ matrix.javaVersion }}-${{ matrix.nativeImage }}
