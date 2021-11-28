@@ -14,7 +14,7 @@
 group_by(.majorMinor) |
 reverse |
 [ .[] | max_by(.version) | .version ] |
-.[:6] as $versions |
+.[:7] as $versions |
 
 {} |
 

@@ -5,11 +5,11 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 application {
-    mainClassName = "com.example.App"
+    mainClass = "com.example.App"
 }
 
 nativeImage {

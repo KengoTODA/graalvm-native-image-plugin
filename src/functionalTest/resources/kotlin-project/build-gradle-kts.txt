@@ -5,7 +5,7 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -17,7 +17,7 @@ dependencies {
 }
 
 application {
-    mainClassName = "com.example.AppKt"
+    mainClass = "com.example.AppKt"
 }
 
 nativeImage {
