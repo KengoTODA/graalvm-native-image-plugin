@@ -14,7 +14,9 @@ application {
 
 nativeImage {
   graalVmHome = System.getenv("JAVA_HOME")
-  mainClass.set("com.example.App")
+  buildType { build ->
+    build.executable(main = "com.example.App")
+  }
   executableName = "pst8pdt-time"
   outputDirectory = file("$buildDir/image")
   arguments("--no-fallback")

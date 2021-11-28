@@ -23,7 +23,9 @@ application {
 
 nativeImage {
   graalVmHome = System.getenv("JAVA_HOME")
-  mainClass.set("com.example.AppKt")
+  buildType { build ->
+    build.executable(main = "com.example.AppKt")
+  }
   executableName = "json2yaml"
   outputDirectory = file("$buildDir/image")
   arguments("--no-fallback")
