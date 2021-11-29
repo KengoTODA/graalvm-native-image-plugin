@@ -1,8 +1,5 @@
 package org.mikeneck.graalvm.config.task;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.FileVisitResult;
@@ -10,15 +7,6 @@ import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Collections;
-import java.util.List;
-import org.gradle.api.file.FileCollection;
-import org.gradle.api.internal.file.BaseDirFileResolver;
-import org.gradle.api.internal.file.collections.DefaultConfigurableFileCollection;
-import org.gradle.api.internal.tasks.DefaultTaskDependencyFactory;
-import org.gradle.api.tasks.util.PatternSet;
-import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -98,37 +86,5 @@ class ConfigFileProvidersTest {
           },
           Path.class);
     }
-  }
-
-  @NotNull
-  private static FileCollection fileCollection(Path directory) {
-    return new DefaultConfigurableFileCollection(
-        "",
-        new BaseDirFileResolver(directory.toFile(), PatternSet::new),
-        DefaultTaskDependencyFactory.withNoAssociatedProject(),
-        Collections.singleton(directory));
-  }
-
-  @Test
-  void existingFile(Path directory) throws IOException {
-    FileCollection fileCollection = fileCollection(directory);
-    ConfigFileProviders providers = ConfigFileProviders.resolving(fileCollection, "test.txt");
-
-    Path file = directory.resolve("test.txt");
-    Files.createFile(file);
-
-    List<File> filesFromProviders = providers.get();
-
-    assertThat(filesFromProviders).containsOnly(file.toFile());
-  }
-
-  @Test
-  void notExisting(Path directory) {
-    FileCollection fileCollection = fileCollection(directory);
-    ConfigFileProviders providers = ConfigFileProviders.resolving(fileCollection, "test.txt");
-
-    List<File> filesFromProviders = providers.get();
-
-    assertThat(filesFromProviders).isEmpty();
   }
 }
