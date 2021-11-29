@@ -19,9 +19,7 @@ dependencies {
 
 nativeImage {
   graalVmHome = System.getenv('JAVA_HOME')
-  buildType { build ->
-    build.executable(main = "com.example.App")
-  }
+  mainClass = 'com.example.App'
   classpath = configurations.app
   executableName = 'test-app'
   runtimeClasspath = configurations.lib

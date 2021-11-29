@@ -23,6 +23,7 @@ application {
 
 nativeImage {
   graalVmHome = System.getenv("JAVA_HOME")
+  mainClass.set("com.example.AppKt")
   buildType { build ->
     build.executable(main = "com.example.AppKt")
   }
