@@ -118,7 +118,7 @@ class ProxyConfigTest {
     try (InputStream inputStream = reader.configJsonResource("config/proxy-config-4.json")) {
       ProxyConfig proxyConfig = objectMapper.readValue(inputStream, ProxyConfig.class);
       assertThat(proxyConfig)
-          .contains(new ProxyUsage("com.example.Printer"), new ProxyUsage("com.example.ExitCode"));
+          .contains(new ProxyUsage("com.example.Printer", "com.example.ExitCode"));
     }
   }
 }
