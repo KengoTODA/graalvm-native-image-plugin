@@ -24,7 +24,7 @@ public class Case60ProxyUsageArrayTest {
             .withProjectDir(context.rootDir.toFile())
             .forwardOutput()
             .withPluginClasspath()
-            .withArguments("generateNativeImageConfig", "--warning-mode", "all")
+            .withArguments("generateNativeImageConfig", "--warning-mode", "all", "--rerun-tasks")
             .build();
 
     assertAll(
@@ -60,7 +60,7 @@ public class Case60ProxyUsageArrayTest {
         .withProjectDir(context.rootDir.toFile())
         .forwardOutput()
         .withPluginClasspath()
-        .withArguments("nativeImage", "--warning-mode", "all")
+        .withArguments("nativeImage", "--warning-mode", "all", "--rerun-tasks")
         .build();
 
     assertThat(context.file("build/image/pst8pdt-time")).exists().isRegularFile().isExecutable();
