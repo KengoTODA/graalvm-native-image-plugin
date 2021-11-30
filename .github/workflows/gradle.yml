@@ -56,6 +56,13 @@ jobs:
             javaVersion: java16
           - graal: 21.0.0
             javaVersion: java16
+          - graal: 21.3.0
+            javaVersion: java8
+          - graal: 21.3.0
+            javaVersion: java16
+        include:
+          - graal: 21.3.0
+            javaVersion: java17
     name: "test ${{ matrix.graal }}.${{ matrix.javaVersion }}(native-image: ${{ matrix.nativeImage }})"
     if: contains( github.ref , 'refs/heads/release' ) == false
 
