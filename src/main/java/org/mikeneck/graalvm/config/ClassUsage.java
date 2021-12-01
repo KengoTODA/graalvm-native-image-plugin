@@ -73,6 +73,10 @@ public class ClassUsage implements Comparable<ClassUsage>, MergeableConfig<Class
   @JsonInclude(JsonInclude.Include.NON_NULL)
   public Boolean queryAllPublicMethods;
 
+  @Nullable
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public SortedSet<MethodUsage> queriedMethods = Collections.emptySortedSet();
+
   @SuppressWarnings("unused")
   public ClassUsage() {}
 
@@ -91,7 +95,8 @@ public class ClassUsage implements Comparable<ClassUsage>, MergeableConfig<Class
       @Nullable Boolean queryAllDeclaredConstructors,
       @Nullable Boolean queryAllPublicConstructors,
       @Nullable Boolean queryAllDeclaredMethods,
-      @Nullable Boolean queryAllPublicMethods) {
+      @Nullable Boolean queryAllPublicMethods,
+      @Nullable SortedSet<MethodUsage> queriedMethods) {
     this.name = name;
     this.methods = methods;
     this.fields = fields;
@@ -107,6 +112,7 @@ public class ClassUsage implements Comparable<ClassUsage>, MergeableConfig<Class
     this.queryAllPublicConstructors = queryAllPublicConstructors;
     this.queryAllDeclaredMethods = queryAllDeclaredMethods;
     this.queryAllPublicMethods = queryAllPublicMethods;
+    this.queriedMethods = queriedMethods;
   }
 
   public ClassUsage(
@@ -208,7 +214,8 @@ public class ClassUsage implements Comparable<ClassUsage>, MergeableConfig<Class
         && Objects.equals(queryAllDeclaredConstructors, that.queryAllDeclaredConstructors)
         && Objects.equals(queryAllPublicConstructors, that.queryAllPublicConstructors)
         && Objects.equals(queryAllDeclaredMethods, that.queryAllDeclaredMethods)
-        && Objects.equals(queryAllPublicMethods, that.queryAllPublicMethods);
+        && Objects.equals(queryAllPublicMethods, that.queryAllPublicMethods)
+        && Objects.equals(queriedMethods, that.queriedMethods);
   }
 
   @Override
@@ -228,7 +235,8 @@ public class ClassUsage implements Comparable<ClassUsage>, MergeableConfig<Class
         queryAllDeclaredConstructors,
         queryAllPublicConstructors,
         queryAllDeclaredMethods,
-        queryAllPublicMethods);
+        queryAllPublicMethods,
+        queriedMethods);
   }
 
   @SuppressWarnings("StringBufferReplaceableByString")
@@ -250,6 +258,7 @@ public class ClassUsage implements Comparable<ClassUsage>, MergeableConfig<Class
     sb.append(", queryAllPublicConstructors=").append(queryAllPublicConstructors);
     sb.append(", queryAllDeclaredMethods=").append(queryAllDeclaredMethods);
     sb.append(", queryAllPublicMethods=").append(queryAllPublicMethods);
+    sb.append(", queriedMethods=").append(queriedMethods);
     sb.append('}');
     return sb.toString();
   }
@@ -268,6 +277,8 @@ public class ClassUsage implements Comparable<ClassUsage>, MergeableConfig<Class
     TreeSet<MethodUsage> newMethods = new TreeSet<>(this.methods);
     newMethods.addAll(other.methods);
     FieldUsages newFields = this.fields.mergeWith(other.fields);
+    TreeSet<MethodUsage> newQueriedMethods = new TreeSet<>(this.queriedMethods);
+    newQueriedMethods.addAll(other.queriedMethods);
     return new ClassUsage(
         this.name,
         newMethods,
@@ -285,6 +296,7 @@ public class ClassUsage implements Comparable<ClassUsage>, MergeableConfig<Class
         BooleanMergeable.mergeBoolean(
             this.queryAllPublicConstructors, other.queryAllPublicConstructors),
         BooleanMergeable.mergeBoolean(this.queryAllDeclaredMethods, other.queryAllDeclaredMethods),
-        BooleanMergeable.mergeBoolean(this.queryAllPublicMethods, other.queryAllPublicMethods));
+        BooleanMergeable.mergeBoolean(this.queryAllPublicMethods, other.queryAllPublicMethods),
+        newQueriedMethods);
   }
 }
