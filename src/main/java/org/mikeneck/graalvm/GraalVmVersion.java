@@ -201,6 +201,8 @@ public enum GraalVmVersion {
         return "11.0";
       } else if ("java16".equals(javaVersion)) {
         return "16.0";
+      } else if ("java17".equals(javaVersion)) {
+        return "17.0";
       }
       throw new IllegalArgumentException(String.format("unknown java version %s", javaVersion));
     }
