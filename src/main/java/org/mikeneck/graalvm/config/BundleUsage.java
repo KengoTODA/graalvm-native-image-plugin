@@ -61,6 +61,11 @@ public class BundleUsage implements Comparable<BundleUsage> {
     if (nameResult != 0) {
       return nameResult;
     }
+    if (o.classNames == null) {
+      return 1;
+    } else if (classNames == null) {
+      return -1;
+    }
     Iterator<String> iterator = o.classNames.iterator();
     for (String className : classNames) {
       if (!iterator.hasNext()) {
@@ -73,6 +78,11 @@ public class BundleUsage implements Comparable<BundleUsage> {
       }
     }
     if (iterator.hasNext()) {
+      return -1;
+    }
+    if (o.locales == null) {
+      return 1;
+    } else if (locales == null) {
       return -1;
     }
     iterator = o.locales.iterator();
