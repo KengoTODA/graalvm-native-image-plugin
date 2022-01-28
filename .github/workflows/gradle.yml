@@ -51,6 +51,8 @@ jobs:
         exclude:
           - graal: 20.3.5
             javaVersion: java17
+          - graal: 20.3.5
+            javaVersion: java8
           - graal: 22.0.0.2
             javaVersion: java8
     name: "test ${{ matrix.graal }}.${{ matrix.javaVersion }}(native-image: ${{ matrix.nativeImage }})"
@@ -72,7 +74,7 @@ jobs:
           echo $JAVA_HOME
 
       - name: Install GraalVM native-image
-        run: gu install native-image
+        run: gu install native-image --auto-yes --non-interactive
         if: "startsWith(matrix.nativeImage, 'installed')"
 
       - name: Get latest gradle version if Java17
