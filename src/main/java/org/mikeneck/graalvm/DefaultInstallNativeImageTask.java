@@ -49,7 +49,7 @@ public class DefaultInstallNativeImageTask extends DefaultTask implements Instal
         .exec(
             execSpec -> {
               execSpec.setExecutable(graalVmUpdaterCommand);
-              execSpec.args("install", "native-image");
+              execSpec.args("install", "native-image", "--auto-yes", "--non-interactive");
             });
   }
 
