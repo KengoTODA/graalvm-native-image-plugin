@@ -8,10 +8,8 @@ import org.jetbrains.annotations.Nullable;
 public class BundleUsage implements Comparable<BundleUsage> {
 
   @NotNull public String name = "";
-  @Nullable
-  public String[] classNames;
-  @Nullable
-  public String[] locales;
+  @Nullable public String[] classNames;
+  @Nullable public String[] locales;
 
   public BundleUsage() {}
 
@@ -46,18 +44,22 @@ public class BundleUsage implements Comparable<BundleUsage> {
 
   @Override
   public String toString() {
-    return "BundleUsage{" +
-            "name='" + name + '\'' +
-            ", classNames=" + Arrays.toString(classNames) +
-            ", locales=" + Arrays.toString(locales) +
-            '}';
+    return "BundleUsage{"
+        + "name='"
+        + name
+        + '\''
+        + ", classNames="
+        + Arrays.toString(classNames)
+        + ", locales="
+        + Arrays.toString(locales)
+        + '}';
   }
 
   @Override
   public int compareTo(@NotNull BundleUsage that) {
     return Comparator.comparing((BundleUsage u) -> u.name)
-            .thenComparing((BundleUsage u) -> u.classNames, Arrays::compare)
-            .thenComparing((BundleUsage u) -> u.locales, Arrays::compare)
-            .compare(this, that);
+        .thenComparing((BundleUsage u) -> u.classNames, Arrays::compare)
+        .thenComparing((BundleUsage u) -> u.locales, Arrays::compare)
+        .compare(this, that);
   }
 }
