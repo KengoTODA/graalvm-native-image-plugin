@@ -42,6 +42,12 @@ public enum GraalVmVersion {
   GRAAL_21_3_0_JAVA_16("21.3.0-java16", new GraalVm21Matcher("21.3.0", "java16")),
   GRAAL_20_3_4_JAVA_8("20.3.4-java8", new GraalVm20Matcher("20.3.4", "java8")),
   GRAAL_20_3_4_JAVA_11("20.3.4-java11", new GraalVm20Matcher("20.3.4", "java11")),
+  GRAAL_20_3_5_JAVA_11("20.3.5-java11", new GraalVm20Matcher("20.3.5", "java11")),
+  GRAAL_21_3_1_JAVA_8("21.3.1-java8", new GraalVm21Matcher("21.3.1", "java8")),
+  GRAAL_21_3_1_JAVA_11("21.3.1-java11", new GraalVm21Matcher("21.3.1", "java11")),
+  GRAAL_21_3_1_JAVA_16("21.3.1-java17", new GraalVm21Matcher("21.3.1", "java17")),
+  GRAAL_22_0_0_2_JAVA_11("22.0.0.2-java11", new GraalVm22Matcher("22.0.0.2", "java11")),
+  GRAAL_22_0_0_2_JAVA_17("22.0.0.2-java17", new GraalVm22Matcher("22.0.0.2", "java17")),
   ;
 
   @NotNull final String version;
@@ -195,6 +201,8 @@ public enum GraalVmVersion {
         return "11.0";
       } else if ("java16".equals(javaVersion)) {
         return "16.0";
+      } else if ("java17".equals(javaVersion)) {
+        return "17.0";
       }
       throw new IllegalArgumentException(String.format("unknown java version %s", javaVersion));
     }
@@ -279,6 +287,47 @@ public enum GraalVmVersion {
     public String toString() {
       @SuppressWarnings("StringBufferReplaceableByString")
       final StringBuilder sb = new StringBuilder("GraalVm21Matcher{");
+      sb.append("graalVmVersion='").append(graalVmVersion).append('\'');
+      sb.append(", simplifiedJavaVersion='").append(simplifiedJavaVersion).append('\'');
+      sb.append(", javaVersion='").append(javaVersion).append('\'');
+      sb.append('}');
+      return sb.toString();
+    }
+
+    @Override
+    public boolean matchesVersion(@NotNull Map<String, String> properties) {
+      return delegate.matchesVersion(properties);
+    }
+
+    @Override
+    public @NotNull String getGraalVmVersion() {
+      return delegate.getGraalVmVersion();
+    }
+
+    @Override
+    public @NotNull String getJavaVersion() {
+      return delegate.getJavaVersion();
+    }
+  }
+
+  static class GraalVm22Matcher implements Matcher {
+
+    final String graalVmVersion;
+    final String simplifiedJavaVersion;
+    final String javaVersion;
+    final GraalVm20Matcher delegate;
+
+    GraalVm22Matcher(String graalVmVersion, String javaVersion) {
+      this.graalVmVersion = graalVmVersion;
+      this.simplifiedJavaVersion = javaVersion;
+      this.javaVersion = javaVersion;
+      this.delegate = new GraalVm20Matcher(graalVmVersion, javaVersion);
+    }
+
+    @Override
+    public String toString() {
+      @SuppressWarnings("StringBufferReplaceableByString")
+      final StringBuilder sb = new StringBuilder("GraalVm22Matcher{");
       sb.append("graalVmVersion='").append(graalVmVersion).append('\'');
       sb.append(", simplifiedJavaVersion='").append(simplifiedJavaVersion).append('\'');
       sb.append(", javaVersion='").append(javaVersion).append('\'');

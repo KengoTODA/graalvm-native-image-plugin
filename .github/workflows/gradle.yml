@@ -38,29 +38,23 @@ jobs:
       fail-fast: false
       matrix:
         graal:
-          - 20.3.0
-          - 21.0.0
-          - 21.1.0
-          - 21.2.0
-          - 21.3.0
+          - 20.3.5
+          - 21.3.1
+          - 22.0.0.2
         javaVersion:
           - java8
           - java11
-          - java16
+          - java17
         nativeImage:
           - installed
           - "uninstalled"
         exclude:
-          - graal: 20.3.0
+          - graal: 20.3.5
+            javaVersion: java17
+          - graal: 20.3.5
             javaVersion: java8
-          - graal: 20.3.0
-            javaVersion: java16
-          - graal: 21.0.0
-            javaVersion: java16
-          - graal: 21.3.0
+          - graal: 22.0.0.2
             javaVersion: java8
-          - graal: 21.3.0
-            javaVersion: java16
     name: "test ${{ matrix.graal }}.${{ matrix.javaVersion }}(native-image: ${{ matrix.nativeImage }})"
     if: contains( github.ref , 'refs/heads/release' ) == false
 
@@ -80,11 +74,11 @@ jobs:
           echo $JAVA_HOME
 
       - name: Install GraalVM native-image
-        run: gu install native-image
+        run: gu install native-image --auto-yes --non-interactive
         if: "startsWith(matrix.nativeImage, 'installed')"
 
-      - name: Get latest gradle version if Java16
-        if: "${{ 'java16' == matrix.javaVersion }}"
+      - name: Get latest gradle version if Java17
+        if: "${{ 'java17' == matrix.javaVersion }}"
         id: latest-gradle
         run:  grep -A 1 " version:" ./.github/workflows/versions.yml | tail -n 1 | sed 's/[- :]//g' | tr -d '"' | awk '{print "::set-output name=version::" $1}'
 
