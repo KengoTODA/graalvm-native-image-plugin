@@ -57,47 +57,49 @@ public class BundleUsage implements Comparable<BundleUsage> {
 
   @Override
   public int compareTo(@NotNull BundleUsage o) {
-    int nameResult = this.name.compareTo(o.name);
+    int nameResult = name.compareTo(o.name);
     if (nameResult != 0) {
       return nameResult;
     }
-    if (o.classNames == null) {
+    if (o.classNames == null && classNames != null) {
       return 1;
-    } else if (classNames == null) {
+    } else if (classNames == null && o.classNames != null) {
       return -1;
-    }
-    Iterator<String> iterator = o.classNames.iterator();
-    for (String className : classNames) {
-      if (!iterator.hasNext()) {
-        return 1;
+    } else if (classNames != null && o.classNames != null) {
+      Iterator<String> iterator = o.classNames.iterator();
+      for (String className : classNames) {
+        if (!iterator.hasNext()) {
+          return 1;
+        }
+        String other = iterator.next();
+        int current = className.compareTo(other);
+        if (current != 0) {
+          return current;
+        }
       }
-      String other = iterator.next();
-      int current = className.compareTo(other);
-      if (current != 0) {
-        return current;
+      if (iterator.hasNext()) {
+        return -1;
       }
     }
-    if (iterator.hasNext()) {
-      return -1;
-    }
-    if (o.locales == null) {
+    if (o.locales == null && locales != null) {
       return 1;
-    } else if (locales == null) {
+    } else if (locales == null && o.locales != null) {
       return -1;
-    }
-    iterator = o.locales.iterator();
-    for (String locale : locales) {
-      if (!iterator.hasNext()) {
-        return 1;
+    } else if (o.locales != null && locales != null) {
+      Iterator<String> iterator = o.locales.iterator();
+      for (String locale : locales) {
+        if (!iterator.hasNext()) {
+          return 1;
+        }
+        String other = iterator.next();
+        int current = locale.compareTo(other);
+        if (current != 0) {
+          return current;
+        }
       }
-      String other = iterator.next();
-      int current = locale.compareTo(other);
-      if (current != 0) {
-        return current;
+      if (iterator.hasNext()) {
+        return -1;
       }
-    }
-    if (iterator.hasNext()) {
-      return -1;
     }
     return 0;
   }
